@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+        <bean class="cn.edu.ujn.ch5.Chinese" id="chinese" scope="prototype">
+        	<property name="language" ref="zhongwen"></property>
+        	<property name="language2" ref="english"></property>
+        </bean>
+       	<bean class="cn.edu.ujn.ch5.English" id="english"></bean>
+       	<bean class="cn.edu.ujn.ch5.ZhongWen" id="zhongwen">
+       		
+       	</bean>
+</beans>
+
+
+
+
+
+
