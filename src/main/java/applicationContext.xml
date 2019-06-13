@@ -1,16 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
-        <bean class="cn.edu.ujn.ch5.Chinese" id="chinese" scope="prototype">
-        	<property name="language" ref="zhongwen"></property>
-        	<property name="language2" ref="english"></property>
-        </bean>
-       	<bean class="cn.edu.ujn.ch5.English" id="english"></bean>
-       	<bean class="cn.edu.ujn.ch5.ZhongWen" id="zhongwen">
-       		
-       	</bean>
+	<bean class="cn.edu.ujn.ch5.Chinese" id="chinese"
+		scope="prototype">
+		<property name="language" ref="zhongwen"></property>
+		<property name="language2" ref="english"></property>
+	</bean>
+	<bean class="cn.edu.ujn.ch5.English" id="english"></bean>
+	<bean class="cn.edu.ujn.ch5.ZhongWen" id="zhongwen">
+	</bean>
+	<bean class="cn.edu.ujn.ch5.aop.HelloSpeaker" id="speaker">
+	</bean>
+	<bean class="cn.edu.ujn.ch5.aop.LogBeforeAdvice"
+		id="logBeforeAdvice"></bean>
+	<bean id="helloProxy"
+		class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<value>cn.edu.ujn.ch5.aop.IHello</value>
+		</property>
+		<property name="target">
+			<ref bean="speaker" />
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>logBeforeAdvice</value>
+			</list>
+		</property>
+
+	</bean>
+
+	<bean
+		class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="beanNames">
+			<list>
+				<value>speaker</value>
+				<value>chinese</value>
+			</list>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>helloAdvisor</value>
+			</list>
+		</property>
+
+	</bean>
+	
+	<bean id="helloAdvisor" class="org.springframework.aop.support.NameMatchMethodPointcutAdvisor">
+	
+	<property name="mappedName">
+	<value>hello*</value>
+	</property>
+	
+	<property name="advices">
+	<ref bean="speaker"/>
+
+	</property>
+	
+	</bean>
+	
+	
+	
 </beans>
 
 
